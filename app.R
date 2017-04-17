@@ -40,7 +40,7 @@ ui <- fluidPage(
                 animate = animationOptions(interval=300), sep="")
     ),
   sidebarPanel(
-    sliderInput("Population", "Population", value=2, min=0, max=5, step=1)
+    sliderInput("Population", "Population", value=5, min=1, max=10, step=1)
     ),
   fluidRow(
     column(3, 
@@ -55,7 +55,7 @@ server <- function(input, output){
     subset_plot <- combo_df[combo_df$year==input$year,]
     plt <- ggplot(subset_plot, aes(x=Life.Expectancy, y=Fertility, key=Country.Name))
     plt <- plt + geom_point(aes(fill=Region, size=Population), alpha=.85, shape=21, colour="gray13")
-    plt <- plt + scale_size(range = c(1, 6)*input$Population, guide = 'none')
+    plt <- plt + scale_size(range = c(1, input$Population)*2, guide = 'none')
     plt <- plt + xlim(0, 90) + ylim(0, 9)
     plt <- plt + scale_fill_manual(values = c('royalblue','orangered','orange','forestgreen',
                                      'darkmagenta','lightseagreen','indianred'), name="")
